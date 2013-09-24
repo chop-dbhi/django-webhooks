@@ -1,5 +1,5 @@
 from django.db import models
-from .events import events
+from .registry import events
 
 __all__ = ('Webhook',)
 

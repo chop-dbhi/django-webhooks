@@ -19,7 +19,7 @@ __version__ = get_version()
 # Do not error out when Django environment is not properly setup
 try:
     from django.core.exceptions import ImproperlyConfigured
-    from .events import *
+    from .registry import *
     from .utils import *
     from .models import *
 except (ImportError, ImproperlyConfigured):

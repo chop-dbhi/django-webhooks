@@ -6,7 +6,7 @@ from multiprocessing.pool import ThreadPool
 from django.conf import settings
 from django.core.serializers.json import DjangoJSONEncoder
 from .models import Webhook
-from .events import events
+from .registry import events
 
 __all__ = ('bind', 'unbind', 'trigger', 'test')
 
