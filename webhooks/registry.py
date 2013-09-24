@@ -20,11 +20,10 @@ class Events(dict):
 
     def unregister(self, event):
         if event not in self:
-            raise NotRegistered('event {0} not registered')
+            raise NotRegistered('event {0} not registered'.format(event))
         del self[event]
 
 events = Events()
-
 register = events.register
 unregister = events.unregister
 
