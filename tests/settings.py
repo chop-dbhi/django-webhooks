@@ -8,6 +8,7 @@ DATABASES = {
 }
 
 INSTALLED_APPS = (
+    'django.contrib.sites',
     'webhooks',
     'tests',
 )
@@ -28,3 +29,5 @@ LOGGING = {
 }
 
 SECRET_KEY = 'acb123'
+
+SITE_ID = 1

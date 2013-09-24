@@ -27,6 +27,8 @@ INSTALLED_APPS = (
 
 - `WEBHOOK_TIMEOUT` - Seconds to wait until a request times out
 - `WEBHOOK_THREADS` - Maximum number of threads to be used in a worker pool
+- `WEBHOOK_USER_AGENT` - The user-agent string for POST requests. Defaults to the current site name if the Django sites apps is installed.
+- `WEBHOOK_VERSION` - The webhook version. If not None, this will be added to the user-agent string, e.g. 'Webhooks/1.0'. Default is 1.0.
 
 ## Trigger Execution
 

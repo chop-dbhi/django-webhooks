@@ -12,6 +12,8 @@ __all__ = ('bind', 'unbind', 'trigger', 'test')
 
 logger = logging.getLogger('webhooks')
 
+WEBHOOK_USER_AGENT = getattr(settings, 'WEBHOOK_USER_AGENT', None)
+WEBHOOK_VERSION = getattr(settings, 'WEBHOOK_VERSION', 1.0)
 WEBHOOK_TIMEOUT = getattr(settings, 'WEBHOOK_TIMEOUT', None)
 WEBHOOK_THREADS = getattr(settings, 'WEBHOOK_THREADS', 4)
 
@@ -104,7 +106,9 @@ def _send_request(args):
     })
 
     request = urllib2.Request(url, data, headers={
+        'User-Agent': _get_user_agent(),
         'Content-Type': 'application/json',
+        'Content-Length': str(len(data)),
     })
 
     try:
@@ -128,3 +132,18 @@ def _send_request(args):
         })
         return None, None
     return response, response.getcode()
+
+def _get_user_agent():
+    user_agent = WEBHOOK_USER_AGENT
+
+    # Get user agent from sites framework if installed
+    if user_agent is None and 'django.contrib.sites' in settings.INSTALLED_APPS:
+        from django.contrib.sites.models import Site
+        site = Site.objects.get_current()
+        user_agent = site.name or site.domain
+
+    # Add version if specified
+    if WEBHOOK_VERSION is not None:
+        user_agent = '{0}/{1}'.format(user_agent, WEBHOOK_VERSION)
+
+    return user_agent
