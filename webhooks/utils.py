@@ -27,7 +27,7 @@ def test(event, url, *args, **kwargs):
 
 def trigger(event, async=True, *args, **kwargs):
     "Triggers webhooks associated with this event."
-    logextra = {'event': event, 'args': args, 'kwargs': kwargs}
+    logextra = {'event': event}
 
     # Get all urls associated with this event
     urls = list(Webhook.objects.filter(event=event).values_list('url', flat=True))
@@ -57,7 +57,7 @@ def _trigger(event, urls, handler=None, async=True, *args, **kwargs):
     an empty dictionary will be used as the payload. This is only used for
     testing webhooks.
     """
-    logextra = {'event': event, 'args': args, 'kwargs': kwargs}
+    logextra = {'event': event}
 
     # Generate payload for encoding
     if handler:
