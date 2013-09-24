@@ -109,7 +109,6 @@ def _send_request(args):
 
     try:
         response = urllib2.urlopen(request, timeout=WEBHOOK_TIMEOUT)
-        return response.getcode()
     except urllib2.HTTPError as e:
         # TODO this may be too aggressive of a log level since it's technically
         # the client's problem that the request failed (assuming a 4xx or 5xx).
@@ -120,10 +119,12 @@ def _send_request(args):
         })
         # HTTPError has a `code` attribute corresponding to the
         # response status code
-        return e.code
+        return None, e.code
     except Exception as e:
         logger.error('webhook request failed', exc_info=True, extra={
             'event': event,
             'url': url,
             'data': data,
         })
+        return None, None
+    return response, response.getcode()
