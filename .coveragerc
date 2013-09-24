@@ -3,7 +3,8 @@ branch = True
 source = webhooks
 omit = 
     */migrations/*
-    
+    webhooks/admin.py
+
 [report]
 exclude_lines =
     pragma: no cover
